@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import {Router,navigate} from '@reach/router'
+import React, {useState} from 'react';
+import Search from './components/Search'
+import Display from './components/Display'
 
 function App() {
+
+  const [item, setItem] = useState({
+    search:'people',
+    id:null
+});
+
+  // const [trigger, setTrigger] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/${item.search}/${item.id}`)
+    // .then(()=>{setTrigger(!trigger)})
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{
+      display:"flex",
+      flexDirection:"column",
+      alignItems:"center"
+    }}>
+      <Search item={item} setItem={setItem} handleSubmit={handleSubmit}/>
+      <Router>
+        <Display path="/:what/:id"/>
+      </Router>
     </div>
   );
 }
